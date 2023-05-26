@@ -60,4 +60,14 @@ export const styles = StyleSheet.create({
         fontSize:20,
         margin:5
     },
+    excerciseAddedText: {
+        textAlign: 'center',
+        fontSize: 25,
+        color: 'green'
+    },
+    excerciseAddedScreen: {
+        flex:1,
+        justifyContent: 'center',
+        height:'100%',
+    }
   });

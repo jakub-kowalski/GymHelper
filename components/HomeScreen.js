@@ -1,6 +1,7 @@
 import { View, Text, TextInput, SafeAreaView, TouchableOpacity, Dimensions, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback} from "react-native";
 import { useState, useRef } from 'react';
 import { styles  } from "../styles/homeScreenStyles";
+import { displayExercises } from "../databaseFunctions";
 
 export const HomeScreen = ({navigation, route}) => {
     const {name} = route.params;
@@ -11,6 +12,11 @@ export const HomeScreen = ({navigation, route}) => {
 
     const onPressAddNewExcercise = () => {
         navigation.navigate('AddNewExcercise');
+    }
+
+    const onPressCreateNewPlan = () => {
+        displayExercises();
+        navigation.navigate('CreateTrainingPlan');
     }
 
     return(
@@ -24,7 +30,9 @@ export const HomeScreen = ({navigation, route}) => {
                     <Text style={styles.cardTitle}>Rozpocznij trening!</Text>
                     <Text style={styles.cardContent}>Wybierz jeden ze swoich planów treningowych i ruszaj bić kolejne rekordy!</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.card}>
+                <TouchableOpacity 
+                    style={styles.card}
+                    onPress={onPressCreateNewPlan}>
                     <Text style={styles.cardTitle}>Stwórz plan treningowy!</Text>
                     <Text style={styles.cardContent}>Dobry plan to podstawa. Już teraz możesz stworzyć swój własny plan treningowy z dostępnych w bazie ćwiczeń!</Text>
                 </TouchableOpacity>

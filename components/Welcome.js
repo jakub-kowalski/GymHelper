@@ -9,7 +9,6 @@ export const Welcome = ({navigation}) => {
     const widthInPx = Math.round(screenWidth * viewWidth);
 
     const [name, setName] = useState('');
-    const [displayName, setDisplayName] = useState(false);
     const [nameInputTouched, setNameInputTouched] = useState(false);
     const [nameInputIsInvalid, setNameInputIsInvalid] = useState(false);
     const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
@@ -22,6 +21,8 @@ export const Welcome = ({navigation}) => {
     useEffect(() => {
         setNameInputIsInvalid(!nameIsValid && nameInputTouched);
     }, [nameIsValid, nameInputTouched]);
+
+    
 
     const onPressHandler = () => {
         Keyboard.dismiss();
