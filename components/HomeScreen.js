@@ -1,7 +1,6 @@
 import { View, Text, TextInput, SafeAreaView, TouchableOpacity, Dimensions, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback} from "react-native";
 import { useState, useRef } from 'react';
 import { styles  } from "../styles/homeScreenStyles";
-import { displayExercises } from "../databaseFunctions";
 
 export const HomeScreen = ({navigation, route}) => {
     const {name} = route.params;
@@ -15,7 +14,6 @@ export const HomeScreen = ({navigation, route}) => {
     }
 
     const onPressCreateNewPlan = () => {
-        displayExercises();
         navigation.navigate('CreateTrainingPlan');
     }
 

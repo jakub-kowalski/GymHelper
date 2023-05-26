@@ -71,22 +71,3 @@ export const addExercise = (focusedBodyPart, exerciseName, description) => {
       });
       setExcercisesAreLoading(false);
   };
-
-//export const getExercises = (setExcercises) => {
-//     return new Promise((resolve, reject) => {
-//       db.transaction((tx) => {
-//         tx.executeSql(
-//           'SELECT * FROM All_Excercises',
-//           [],
-//           (txObj, resultSet) => {
-//             setExcercises(resultSet.rows._array);
-//           },
-//           (txObj, error) => {
-//             reject(error);
-//           }
-//         );
-//       });
-//     });
-//   };
-  
-
