@@ -17,8 +17,8 @@ export const HomeScreen = ({navigation, route}) => {
         navigation.navigate('AddNewExcercise');
     }
 
-    const onPressCreateNewPlan = () => {
-        navigation.navigate('CreateTrainingPlan');
+    const onPressCreateOrEditPlan = () => {
+        navigation.navigate('CreateOrEditPlan');
     }
 
     const onPressBeginTraining = () => {
@@ -41,9 +41,9 @@ export const HomeScreen = ({navigation, route}) => {
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.card}
-                    onPress={onPressCreateNewPlan}>
-                    <Text style={styles.cardTitle}>Stwórz plan treningowy!</Text>
-                    <Text style={styles.cardContent}>Dobry plan to podstawa. Już teraz możesz stworzyć swój własny plan treningowy z dostępnych w bazie ćwiczeń!</Text>
+                    onPress={onPressCreateOrEditPlan}>
+                    <Text style={styles.cardTitle}>Stwórz lub edytuj swój plan!</Text>
+                    <Text style={styles.cardContent}>Dobry plan to podstawa. Już teraz możesz stworzyć swój własny plan treningowy z dostępnych w bazie ćwiczeń lub edytować już istniejący!</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.card}>
                     <Text style={styles.cardTitle}>Sprawdź swoje postępy!</Text>

@@ -11,6 +11,10 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-start',
         //borderWidth:1
     },
+    middle: {
+        flex:1,
+        justifyContent:'center'
+    }, 
     logo: {
         textAlign:'center',
         fontSize:40,
@@ -38,11 +42,28 @@ export const styles = StyleSheet.create({
         marginTop: 15,
         
     },
+    nameRequest: {
+        fontSize:20,
+        textAlign:'center'
+    },
     buttonText:{
         color: 'white',
         textAlign:'center',
         fontSize:20,
         margin:5
+    },
+    input: {
+        borderWidth: 1,
+        margin: 10,
+        padding: 10,
+        textAlign: 'center',
+        fontSize:20,
+        borderRadius:30
+    },
+    invalid: {
+        color : 'red',
+        textAlign: 'right',
+        marginBottom: 10
     },
     loadingText: {
         textAlign: 'center',
@@ -81,5 +102,15 @@ export const styles = StyleSheet.create({
     },
     checkbox: {
         justifyContent: 'center'
+    },
+    planAddedText: {
+        textAlign: 'center',
+        fontSize: 25,
+        color: 'green'
+    },
+    planAddedScreen: {
+        flex:1,
+        justifyContent: 'center',
+        height:'100%',
     }
   });

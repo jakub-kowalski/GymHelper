@@ -6,6 +6,7 @@ import { AddNewExcercise } from './components/AddNewExcercise';
 import { useEffect } from 'react';
 import { createTables } from './databaseFunctions';
 import {CreateTrainingPlan} from './components/CreateTrainingPlan';
+import { CreateOrEditPlan } from './components/CreateOrEditPlan';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -27,6 +28,9 @@ export default function App() {
           <Stack.Screen
             name='AddNewExcercise'
             component={AddNewExcercise} />
+          <Stack.Screen
+            name='CreateOrEditPlan'
+            component={CreateOrEditPlan} />
           <Stack.Screen
             name='CreateTrainingPlan'
             component={CreateTrainingPlan} />

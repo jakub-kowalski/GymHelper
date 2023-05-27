@@ -52,7 +52,7 @@ export const AddNewExcercise = ({navigation, route}) => {
         Keyboard.dismiss();
         setExcerciseNameInputTouched(true);
         setExcerciseBodyPartInputTouched(true);
-        if(!excerciseNameIsValid ||!excerciseBodyPartIsValid){
+        if(!excerciseNameIsValid || !excerciseBodyPartIsValid){
             return;
         }
         addExercise(excerciseBodyPart, excerciseName, excerciseDescription);
@@ -69,6 +69,7 @@ export const AddNewExcercise = ({navigation, route}) => {
             setExcerciseDescription('');
             setExcerciseNameInputTouched(false);
             setExcerciseBodyPartInputTouched(false);
+            navigation.goBack(0);
         }, 3000);
     }
 
