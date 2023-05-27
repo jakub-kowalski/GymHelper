@@ -1,6 +1,7 @@
 import { View, Text, TextInput, SafeAreaView, TouchableOpacity, Dimensions, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback} from "react-native";
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { styles  } from "../styles/homeScreenStyles";
+import { getAllTrainings } from "../databaseFunctions";
 
 export const HomeScreen = ({navigation, route}) => {
     const {name} = route.params;
@@ -8,6 +9,9 @@ export const HomeScreen = ({navigation, route}) => {
     const screenWidth = Dimensions.get('window').width;
     const viewWidth = 0.8;
     const widthInPx = Math.round(screenWidth * viewWidth);
+
+    const [plans, setPlans] = useState([]);
+    const [plansAreLoading, setPlansAreLoading] = useState(true)
 
     const onPressAddNewExcercise = () => {
         navigation.navigate('AddNewExcercise');
@@ -17,6 +21,11 @@ export const HomeScreen = ({navigation, route}) => {
         navigation.navigate('CreateTrainingPlan');
     }
 
+    const onPressBeginTraining = () => {
+        getAllTrainings(setPlans, setPlansAreLoading)
+        console.log(plans)
+    }
+
     return(
         <SafeAreaView style={styles.container}>
             <View style={styles.top}>
@@ -24,7 +33,9 @@ export const HomeScreen = ({navigation, route}) => {
                 <Text style={[styles.header, {width: widthInPx}]}>Co dzisiaj robimy, {name}?</Text>
             </View>
             <View style={[styles.bottom, {width:widthInPx}]}>
-                <TouchableOpacity style={styles.card}>
+                <TouchableOpacity
+                     style={styles.card}
+                     onPress={onPressBeginTraining}>
                     <Text style={styles.cardTitle}>Rozpocznij trening!</Text>
                     <Text style={styles.cardContent}>Wybierz jeden ze swoich planów treningowych i ruszaj bić kolejne rekordy!</Text>
                 </TouchableOpacity>

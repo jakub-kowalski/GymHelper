@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { View, Text, SafeAreaView, Dimensions, Keyboard, KeyboardAvoidingView, TouchableOpacity, ScrollView } from "react-native";
 import { getExercises } from "../databaseFunctions";
 import { styles } from "../styles/createTrainingPlanStyles";
 import { CheckBox } from "react-native-elements";
+import { addTrainingPlan } from "../databaseFunctions";
 
 export const CreateTrainingPlan = ({navigation, route}) => {
 
@@ -13,6 +14,8 @@ export const CreateTrainingPlan = ({navigation, route}) => {
     const [excercisesAreLoading, setExcercisesAreLoading] = useState(true);
     const [excercises, setExcercises] = useState([]);
     const [selectedExcercises, setSelectedExcercises] = useState([]);
+
+    const selectedExcercisesRef = useRef([]);
 
     useEffect(() => {
         getExercises(setExcercises, setExcercisesAreLoading);
@@ -54,20 +57,29 @@ export const CreateTrainingPlan = ({navigation, route}) => {
     }
 
     const onPressAddPlanHandler = () => {
-        
+        const planName = 'Plan 1'
+        getSelectedExcercises();
+        console.log(selectedExcercises)
+        if (selectedExcercises.length === 0){
+            console.log('Dodaj co najmniej jedno ćwiczenie')
+            return
+        }
+        addTrainingPlan(planName, selectedExcercises)
     }
 
     const handleCheckboxChange = (excerciseId) => {
-        const updatedExcercises = excercises.map((excercise) => {
-          if (excercise.Excercise_ID === excerciseId) {
-            return {
-              ...excercise,
-              isChecked: !excercise.isChecked, // Zmiana stanu zaznaczenia
-            };
-          }
-          return excercise;
+        setExcercises(prevExcercises => {
+          const updatedExcercises = prevExcercises.map((excercise) => {
+            if (excercise.Excercise_ID === excerciseId) {
+              return {
+                ...excercise,
+                isChecked: !excercise.isChecked,
+              };
+            }
+            return excercise;
+          });
+          return updatedExcercises;
         });
-        setExcercises(updatedExcercises);
       };
 
       const getSelectedExcercises = () => {
@@ -98,7 +110,7 @@ export const CreateTrainingPlan = ({navigation, route}) => {
                     style={[styles.button, {width: widthInPx}]} 
                     onPress={onPressAddPlanHandler}>
                     <Text style={styles.buttonText}>
-                        Dodaj ćwiczenie
+                        Utwórz plan
                     </Text>
                 </TouchableOpacity>
             </View>
