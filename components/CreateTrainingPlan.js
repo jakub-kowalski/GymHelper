@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { View, Text, SafeAreaView, Dimensions, Keyboard, KeyboardAvoidingView, TouchableOpacity, ScrollView } from "react-native";
-import { getExercises } from "../databaseFunctions";
+import { deleteAllTrainingPlans, getExercises } from "../databaseFunctions";
 import { styles } from "../styles/createTrainingPlanStyles";
 import { CheckBox } from "react-native-elements";
 import { addTrainingPlan } from "../databaseFunctions";
@@ -56,18 +56,69 @@ export const CreateTrainingPlan = ({navigation, route}) => {
         navigation.goBack();
     }
 
+    // const onPressAddPlanHandler = () => {
+    //     console.clear()
+    //     const planName = 'Plan 1'
+    //     getSelectedExcercises();
+    //     console.log(selectedExcercises)
+    //     if (selectedExcercises.length === 0){
+    //         console.log('Dodaj co najmniej jedno ćwiczenie')
+    //         return
+    //     }
+    //     addTrainingPlan(planName, selectedExcercises)
+    // }
+
     const onPressAddPlanHandler = () => {
-        const planName = 'Plan 1'
-        getSelectedExcercises();
-        console.log(selectedExcercises)
-        if (selectedExcercises.length === 0){
-            console.log('Dodaj co najmniej jedno ćwiczenie')
-            return
+        deleteAllTrainingPlans();
+        console.clear();
+        const planName = 'Plan 1';
+      
+        const selectedExcercisesTmp = getSelectedExcercises();
+        setSelectedExcercises(selectedExcercisesTmp); // Aktualizacja selectedExcercises
+      
+        console.log(selectedExcercisesTmp);
+      
+        if (selectedExcercisesTmp.length === 0) {
+          console.log('Dodaj co najmniej jedno ćwiczenie');
+          return;
         }
-        addTrainingPlan(planName, selectedExcercises)
-    }
+      
+        addTrainingPlan(planName, selectedExcercisesTmp)
+          .then(() => {
+            console.log('Plan treningowy dodany do bazy danych');
+            // Dodatkowe operacje po dodaniu planu treningowego do bazy danych
+          })
+          .catch((error) => {
+            console.log('Wystąpił błąd podczas dodawania planu treningowego do bazy danych:', error);
+            // Obsługa błędu
+          });
+      };
+
+    // const onPressAddPlanHandler = () => {
+    //     console.clear();
+    //     const planName = 'Plan 1';
+      
+    //     const selectedExcercisesTmp = getSelectedExcercises();
+    //     console.log(selectedExcercisesTmp);
+      
+    //     if (selectedExcercisesTmp.length === 0) {
+    //       console.log('Dodaj co najmniej jedno ćwiczenie');
+    //       return;
+    //     }
+      
+    //     addTrainingPlan(planName, selectedExcercisesTmp)
+    //       .then(() => {
+    //         console.log('Plan treningowy dodany do bazy danych');
+    //         // Dodatkowe operacje po dodaniu planu treningowego do bazy danych
+    //       })
+    //       .catch((error) => {
+    //         console.log('Wystąpił błąd podczas dodawania planu treningowego do bazy danych:', error);
+    //         // Obsługa błędu
+    //       });
+    //   };
 
     const handleCheckboxChange = (excerciseId) => {
+        console.log('\n\n\n\n\n\n')
         setExcercises(prevExcercises => {
           const updatedExcercises = prevExcercises.map((excercise) => {
             if (excercise.Excercise_ID === excerciseId) {
@@ -76,17 +127,25 @@ export const CreateTrainingPlan = ({navigation, route}) => {
                 isChecked: !excercise.isChecked,
               };
             }
+            console.log(excercise)
             return excercise;
           });
           return updatedExcercises;
         });
       };
 
-      const getSelectedExcercises = () => {
-        const selectedExcercises = excercises
+    //   const getSelectedExcercises = () => {
+    //     const selectedExcercisesTmp = excercises
+    //       .filter((excercise) => excercise.isChecked)
+    //       .map((excercise) => excercise.Excercise_ID);
+    //     setSelectedExcercises(selectedExcercisesTmp);
+    //   };
+
+    const getSelectedExcercises = () => {
+        const selectedExcercisesTmp = excercises
           .filter((excercise) => excercise.isChecked)
           .map((excercise) => excercise.Excercise_ID);
-        setSelectedExcercises(selectedExcercises);
+        return selectedExcercisesTmp;
       };
 
     return(
