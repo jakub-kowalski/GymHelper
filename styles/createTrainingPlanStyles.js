@@ -72,7 +72,7 @@ export const styles = StyleSheet.create({
     bottom: {
         
     }, 
-    excercise: {
+    exercise: {
         padding: 10,
         margin:10,
         flex: 1,
@@ -83,11 +83,11 @@ export const styles = StyleSheet.create({
         flex:1,
         //borderWidth:1,
     },
-    excerciseInfo: {
+    exerciseInfo: {
         flex:1,
         flexDirection:'column'
     },
-    excerciseName: {
+    exerciseName: {
         fontWeight:'bold',
         fontSize:20,
         marginBottom:5

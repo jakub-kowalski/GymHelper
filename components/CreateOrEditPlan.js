@@ -1,6 +1,7 @@
 import { View, Text, TextInput, SafeAreaView, TouchableOpacity, Dimensions, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback} from "react-native";
 import { useState, useRef, useEffect } from 'react';
 import { styles } from "../styles/createOrEditPlanStyles"; 
+import { onPressReturnHandler, onPressAddNewPlan } from "../functions/createOrEditPlanFunctions";
 
 export const CreateOrEditPlan = ({navigation, route}) => {
 
@@ -8,16 +9,8 @@ export const CreateOrEditPlan = ({navigation, route}) => {
     const viewWidth = 0.8;
     const widthInPx = Math.round(screenWidth * viewWidth);
 
-    const onPressAddNewPlan = () => {
-        navigation.navigate('CreateTrainingPlan')
-    }
-
     const onPressEditPlan = () => {
 
-    }
-
-    const onPressReturnHandler = () => {
-        navigation.goBack();
     }
 
     return(
@@ -30,7 +23,7 @@ export const CreateOrEditPlan = ({navigation, route}) => {
             <View style={[styles.middle, {width:widthInPx}]}>
                 <TouchableOpacity
                      style={styles.card}
-                     onPress={onPressAddNewPlan}>
+                     onPress={(e) => onPressAddNewPlan(e, navigation)}>
                     <Text style={styles.cardTitle}>Stwórz nowy plan!</Text>
                     <Text style={styles.cardContent}>Wybierz ćwiczenia z baazy i utwórz z nich swój włąsny plan.</Text>
                 </TouchableOpacity>
@@ -44,7 +37,7 @@ export const CreateOrEditPlan = ({navigation, route}) => {
             <View style={styles.bottom}>
                 <TouchableOpacity 
                     style={[styles.button, {width: widthInPx, backgroundColor: '#5E6061'}]} 
-                    onPress={onPressReturnHandler}>
+                    onPress={(e) => onPressReturnHandler(e, navigation)}>
                     <Text style={styles.buttonText}>
                         Powrót
                     </Text>

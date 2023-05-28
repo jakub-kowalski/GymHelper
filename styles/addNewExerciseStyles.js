@@ -60,12 +60,12 @@ export const styles = StyleSheet.create({
         fontSize:20,
         margin:5
     },
-    excerciseAddedText: {
+    exerciseAddedText: {
         textAlign: 'center',
         fontSize: 25,
         color: 'green'
     },
-    excerciseAddedScreen: {
+    exerciseAddedScreen: {
         flex:1,
         justifyContent: 'center',
         height:'100%',

@@ -2,11 +2,13 @@ import { Welcome } from './components/Welcome';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { HomeScreen } from './components/HomeScreen';
-import { AddNewExcercise } from './components/AddNewExcercise';
+import { AddNewExercise } from './components/AddNewExercise';
 import { useEffect } from 'react';
 import { createTables } from './databaseFunctions';
 import {CreateTrainingPlan} from './components/CreateTrainingPlan';
 import { CreateOrEditPlan } from './components/CreateOrEditPlan';
+import { BeginNewTraining } from './components/BeginNewTraining';
+import { TrainingHistory } from './components/TrainingHistory';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -26,14 +28,20 @@ export default function App() {
             name='HomeScreen' 
             component={HomeScreen} />
           <Stack.Screen
-            name='AddNewExcercise'
-            component={AddNewExcercise} />
+            name='AddNewExercise'
+            component={AddNewExercise} />
           <Stack.Screen
             name='CreateOrEditPlan'
             component={CreateOrEditPlan} />
           <Stack.Screen
             name='CreateTrainingPlan'
             component={CreateTrainingPlan} />
+          <Stack.Screen
+            name='BeginNewTraining'
+            component={BeginNewTraining} />
+          <Stack.Screen
+            name='TrainingHistory'
+            component={TrainingHistory} />
         </Stack.Navigator>
       </NavigationContainer>
   );
