@@ -1,6 +1,6 @@
-import { View, Text, TextInput, SafeAreaView, TouchableOpacity, Dimensions, ImageBackground, KeyboardAvoidingView, Animated, TouchableWithoutFeedback, Keyboard} from "react-native";
+import { View, Text, TextInput, SafeAreaView, TouchableOpacity, Dimensions, ImageBackground, KeyboardAvoidingView, Animated, TouchableWithoutFeedback} from "react-native";
 import { useState, useRef, useEffect } from 'react';
-import { onScreenPressHandler, onEndEditingHandler, onFocusHandler} from "../functions/welcomeHandlers";
+import { onScreenPressHandler, onEndEditingHandler, onFocusHandler, onPressHandler} from "../functions/welcomeHandlers";
 import { styles } from "../styles/welcomeStyles";
 
 export const Welcome = ({navigation}) => {
@@ -13,33 +13,14 @@ export const Welcome = ({navigation}) => {
     const [nameInputIsInvalid, setNameInputIsInvalid] = useState(false);
     const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
 
-    const nameIsValid = name.trim() !== '';
-
     const inputNameRef = useRef(null);
     const welcomeMessageOpacity = useRef(new Animated.Value(0)).current;
+    
+    const nameIsValid = name.trim() !== '';
 
     useEffect(() => {
         setNameInputIsInvalid(!nameIsValid && nameInputTouched);
     }, [nameIsValid, nameInputTouched]);
-
-    
-
-    const onPressHandler = () => {
-        Keyboard.dismiss();
-        setNameInputTouched(true);
-        if (!nameIsValid) {
-            return;
-        }
-        setShowWelcomeMessage(true);
-        Animated.timing(welcomeMessageOpacity, {
-            toValue: 1,
-            duration: 1500,
-            useNativeDriver: true,
-        }).start();
-        setTimeout(() => {
-        navigation.replace('HomeScreen', {name});
-    }, 3000);
-    };
 
   return (
     <TouchableWithoutFeedback onPress={(e) => onScreenPressHandler(e, inputNameRef)}>
@@ -76,7 +57,7 @@ export const Welcome = ({navigation}) => {
                         
                         <TouchableOpacity 
                             style={[styles.button, {width: widthInPx}]} 
-                            onPress={onPressHandler}>
+                            onPress={() => onPressHandler(setNameInputTouched, nameIsValid, setShowWelcomeMessage, welcomeMessageOpacity, navigation, name)}>
                             <Text style={styles.buttonText}>
                                 Zaczynajmy!
                             </Text>

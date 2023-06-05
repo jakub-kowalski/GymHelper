@@ -88,7 +88,7 @@ export const renderExercises = (exercises, widthInPx, setExercises) => {
         return(
         <TouchableOpacity 
             key={exercise.Excercise_ID} 
-            style= {[styles.exercise, {width:widthInPx}]}
+            style= {[styles.card, {width:widthInPx}]}
             onPress={() => handleCheckboxChange(setExercises,exercise.Excercise_ID)}>
             <View style={styles.exerciseInfo}>
                 <Text style={styles.exerciseName}>{exercise.Excercise_Name}</Text>

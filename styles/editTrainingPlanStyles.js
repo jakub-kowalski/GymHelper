@@ -70,13 +70,13 @@ export const styles = StyleSheet.create({
         fontSize: 25,
     }, 
     bottom: {
-        
+        borderWidth:1
     }, 
     exercise: {
         padding: 10,
         margin:10,
         flex: 1,
-        flexDirection:'row',
+        flexDirection:'column',
         borderWidth:1,
     },
     mainContent: {
@@ -93,7 +93,7 @@ export const styles = StyleSheet.create({
         marginBottom:5
     },
     focusedPart: {
-        fontSize:18,
+        fontSize:16,
         marginBottom: 5,
         fontStyle: 'italic'
     },
@@ -127,6 +127,55 @@ export const styles = StyleSheet.create({
         elevation: 2,
         margin:10,
         justifyContent:'center',
-        flexDirection:'row'
       },
+      modalContainer: {
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center',
+      },
+      modalBg: {
+        backgroundColor:'white',
+        padding:10,
+        borderRadius:30,
+        height:'30%'
+      },
+      modalTitle: {
+        textAlign:'center',
+        fontWeight:'bold',
+        fontSize:25,
+        margin:10
+      },
+      sideBtn: {
+        flex:1,
+        flexDirection:'row',
+        marginLeft:10,
+        marginRight:10,
+        justifyContent:'space-between',
+      },
+      buttonModal: {
+        backgroundColor:'black',
+        borderRadius: 50,
+        padding:5,
+        margin:10,
+        marginTop: 15, 
+        justifyContent:'center',
+        minWidth:130
+    },
+    buttonTextModal:{
+        color: 'white',
+        textAlign:'center',
+        fontSize:20,
+        margin:5
+    },
+    exerciseAddedText: {
+        textAlign: 'center',
+        fontSize: 25,
+        color: 'green'
+    },
+    exerciseAddedScreen: {
+        flex:1,
+        justifyContent: 'center',
+        height:'100%',
+    }
+
   });

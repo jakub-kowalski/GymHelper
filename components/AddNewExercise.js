@@ -1,8 +1,7 @@
-import { View, Text, TextInput, SafeAreaView, TouchableOpacity, Dimensions, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Animated} from "react-native";
+import { View, Text, TextInput, SafeAreaView, TouchableOpacity, Dimensions, TouchableWithoutFeedback, Animated} from "react-native";
 import { useState, useRef, useEffect } from 'react';
 import { styles } from "../styles/addNewExerciseStyles";
-import { addExercise } from "../databaseFunctions";
-import { onExerciseNameFocusHandler, onExerciseBodyPartEndEditingHandler, onExerciseBodyPartFocusHandler, onExerciseNameEndEditingHandler, onScreenPressHandler, onPressReturnHandler } from "../functions/addNewExerciseFunctions";
+import { onExerciseNameFocusHandler, onExerciseBodyPartEndEditingHandler, onExerciseBodyPartFocusHandler, onExerciseNameEndEditingHandler, onScreenPressHandler, onPressReturnHandler, onPressAddExerciseHandler } from "../functions/addNewExerciseFunctions";
 
 export const AddNewExercise = ({navigation, route}) => {
     const screenWidth = Dimensions.get('window').width;
@@ -17,16 +16,15 @@ export const AddNewExercise = ({navigation, route}) => {
     const [exerciseNameInputIsInvalid, setExerciseNameInputIsInvalid] = useState(false);
     const [exerciseBodyPartInputTouched, setExerciseBodyPartInputTouched] = useState(false);
     const [exerciseBodyPartInputIsInvalid, setExerciseBodyPartInputIsInvalid] = useState(false);
-
     const [exerciseAdded, setExerciseAdded] = useState(false);
-
-    const exerciseNameIsValid = exerciseName.trim() !== '';
-    const exerciseBodyPartIsValid = exerciseBodyPart.trim() !== '';
 
     const inputExerciseNameRef = useRef(null);
     const inputExerciseBodyPartRef = useRef(null);
     const inputExerciseDescriptionRef = useRef(null);
     const welcomeMessageOpacity = useRef(new Animated.Value(0)).current;
+
+    const exerciseNameIsValid = exerciseName.trim() !== '';
+    const exerciseBodyPartIsValid = exerciseBodyPart.trim() !== '';
 
     useEffect(() => {
         setExerciseNameInputIsInvalid(!exerciseNameIsValid && exerciseNameInputTouched);
@@ -36,30 +34,7 @@ export const AddNewExercise = ({navigation, route}) => {
         setExerciseBodyPartInputIsInvalid(!exerciseBodyPartIsValid && exerciseBodyPartInputTouched);
     }, [exerciseBodyPartIsValid, exerciseBodyPartInputTouched]);
 
-    const onPressAddExerciseHandler = () => {
-        Keyboard.dismiss();
-        setExerciseNameInputTouched(true);
-        setExerciseBodyPartInputTouched(true);
-        if(!exerciseNameIsValid || !exerciseBodyPartIsValid){
-            return;
-        }
-        addExercise(exerciseBodyPart, exerciseName, exerciseDescription);
-        setExerciseAdded(true);
-        Animated.timing(welcomeMessageOpacity, {
-            toValue: 1,
-            duration: 1500,
-            useNativeDriver: true,
-        }).start();
-        setTimeout(() => {
-            setExerciseAdded(false);
-            setExerciseName('');
-            setExerciseBodyPart('');
-            setExerciseDescription('');
-            setExerciseNameInputTouched(false);
-            setExerciseBodyPartInputTouched(false);
-            navigation.goBack(0);
-        }, 3000);
-    } 
+
 
     return(
         <TouchableWithoutFeedback onPress={(e) => onScreenPressHandler(e, inputExerciseNameRef, inputExerciseBodyPartRef, inputExerciseDescriptionRef)}>
@@ -116,7 +91,7 @@ export const AddNewExercise = ({navigation, route}) => {
                         </TouchableOpacity>
                         <TouchableOpacity 
                             style={[styles.button, {width: widthInPx}]} 
-                            onPress={onPressAddExerciseHandler}>
+                            onPress={() => onPressAddExerciseHandler(setExerciseNameInputTouched, setExerciseBodyPartInputTouched, exerciseNameIsValid, exerciseBodyPartIsValid, exerciseBodyPart, exerciseName, exerciseDescription, setExerciseAdded, welcomeMessageOpacity, setExerciseName, setExerciseBodyPart, setExerciseDescription, navigation)}>
                             <Text style={styles.buttonText}>
                                 Dodaj ćwiczenie
                             </Text>

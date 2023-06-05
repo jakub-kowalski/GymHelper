@@ -9,6 +9,7 @@ import {CreateTrainingPlan} from './components/CreateTrainingPlan';
 import { CreateOrEditPlan } from './components/CreateOrEditPlan';
 import { BeginNewTraining } from './components/BeginNewTraining';
 import { TrainingHistory } from './components/TrainingHistory';
+import { EditTrainingPlan } from './components/EditTrainingPlan';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -42,6 +43,9 @@ export default function App() {
           <Stack.Screen
             name='TrainingHistory'
             component={TrainingHistory} />
+          <Stack.Screen
+          name='EditTrainingPlan'
+          component={EditTrainingPlan} />
         </Stack.Navigator>
       </NavigationContainer>
   );

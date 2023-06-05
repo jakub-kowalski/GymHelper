@@ -1,8 +1,8 @@
-import { View, Text, TextInput, SafeAreaView, TouchableOpacity, Dimensions, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback} from "react-native";
+import { View, Text, SafeAreaView, TouchableOpacity, Dimensions} from "react-native";
 import { useState, useRef, useEffect } from 'react';
 import { styles  } from "../styles/homeScreenStyles";
 import { getAllTrainings } from "../databaseFunctions";
-import { onPressBeginTraining, onPressCreateOrEditPlan, onPressTrainingHistory, onPressAddNewExercise } from "../functions/homeScreenFunctions";
+import { onPressCreateOrEditPlan, onPressTrainingHistory, onPressAddNewExercise, onPressBeginTraining } from "../functions/homeScreenFunctions";
 
 export const HomeScreen = ({navigation, route}) => {
     const {name} = route.params;
@@ -14,6 +14,9 @@ export const HomeScreen = ({navigation, route}) => {
     const [plans, setPlans] = useState([]);
     const [plansAreLoading, setPlansAreLoading] = useState(true)
 
+    useEffect(() => {
+        console.log(plans)
+    }, [plans])
     return(
         <SafeAreaView style={styles.container}>
             <View style={styles.top}>

@@ -1,17 +1,12 @@
-import { View, Text, TextInput, SafeAreaView, TouchableOpacity, Dimensions, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback} from "react-native";
-import { useState, useRef, useEffect } from 'react';
+import { View, Text, SafeAreaView, TouchableOpacity, Dimensions} from "react-native";
 import { styles } from "../styles/createOrEditPlanStyles"; 
-import { onPressReturnHandler, onPressAddNewPlan } from "../functions/createOrEditPlanFunctions";
+import { onPressReturnHandler, onPressAddNewPlan, onPressEditPlan } from "../functions/createOrEditPlanFunctions";
 
 export const CreateOrEditPlan = ({navigation, route}) => {
 
     const screenWidth = Dimensions.get('window').width;
     const viewWidth = 0.8;
     const widthInPx = Math.round(screenWidth * viewWidth);
-
-    const onPressEditPlan = () => {
-
-    }
 
     return(
         <SafeAreaView style={styles.container}>
@@ -25,11 +20,11 @@ export const CreateOrEditPlan = ({navigation, route}) => {
                      style={styles.card}
                      onPress={(e) => onPressAddNewPlan(e, navigation)}>
                     <Text style={styles.cardTitle}>Stwórz nowy plan!</Text>
-                    <Text style={styles.cardContent}>Wybierz ćwiczenia z baazy i utwórz z nich swój włąsny plan.</Text>
+                    <Text style={styles.cardContent}>Wybierz ćwiczenia z bazy i utwórz z nich swój włąsny plan.</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.card}
-                    onPress={onPressEditPlan}>
+                    onPress={(e) => onPressEditPlan(e, navigation)}>
                     <Text style={styles.cardTitle}>Edytuj plan!</Text>
                     <Text style={styles.cardContent}>Edytuj jeden z istniejących planów treningowych. Dodaj lub usuń ćwiczenia.</Text>
                 </TouchableOpacity>

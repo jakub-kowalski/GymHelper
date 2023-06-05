@@ -1,4 +1,5 @@
 import * as SQLite from 'expo-sqlite';
+import { Animated } from 'react-native';
 
 const db = SQLite.openDatabase('GymHelper');
 
@@ -38,14 +39,13 @@ export const addExercise = (focusedBodyPart, exerciseName, description) => {
     });
   };
 
-  export const getExercises = (setExcercises, setExcercisesAreLoading) => {
+  export const getExercises = (setExcercises) => {
       db.transaction((tx) => {
         tx.executeSql('SELECT * FROM All_Excercises', null,
           (txObj, resultSet) => setExcercises(resultSet.rows._array),
           (txObj, error) => console.log(error)
         );
       });
-      setExcercisesAreLoading(false);
   };
 
   export const addTrainingPlan = (planName, selectedExercises) => {
@@ -65,14 +65,13 @@ export const addExercise = (focusedBodyPart, exerciseName, description) => {
     });
     })};
   
-  export const getAllTrainings = (setPlans, setPlansAreLoading) => {
+  export const getAllTrainings = (setPlans) => {
     db.transaction((tx) => {
       tx.executeSql("SELECT * FROM Training_Plan", null,
         (txObj, resultSet) => setPlans(resultSet.rows._array),
         (txObj, error) => console.log(error)
       );
     });
-    setPlansAreLoading(false);
   };
 
 export const deleteAllTrainingPlans = () => {
@@ -83,6 +82,37 @@ export const deleteAllTrainingPlans = () => {
       },
       (txObj, error) => {
         console.log("Błąd podczas usuwania planów treningowych:", error);
+      }
+    );
+  });
+};
+
+export const deleteTrainingPlan = (planId, setExerciseDeleted, welcomeMessageOpacity, navigation) => {
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          "DELETE FROM Training_Plan WHERE Plan_ID = ?",
+          [planId],
+          (_, result) => {
+            resolve(result);
+            setExerciseDeleted(true)
+            Animated.timing(welcomeMessageOpacity, {
+              toValue: 1,
+              duration: 1500,
+              useNativeDriver: true,
+          }).start();
+          setTimeout(() => {
+            navigation.goBack(0);
+        }, 3000);
+          },
+          (_, error) => {
+            reject(error);
+          }
+        );
+      },
+      (error) => {
+        reject(error);
       }
     );
   });

@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import { View, Text, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, TextInput, TouchableWithoutFeedback, Animated } from "react-native";
 import { getExercises } from "../databaseFunctions";
 import { styles } from "../styles/createTrainingPlanStyles";
-import { CheckBox } from "react-native-elements";
 import { onFocusHandler, onEndEditingHandler, onPressReturnHandler, onScreenPressHandler, onPressPlanNameHandler, onPressAddPlanHandler, renderExercises } from "../functions/createTrainingPlanFunctions";
 
 export const CreateTrainingPlan = ({navigation, route}) => {
@@ -11,35 +10,28 @@ export const CreateTrainingPlan = ({navigation, route}) => {
     const viewWidth = 0.8;
     const widthInPx = Math.round(screenWidth * viewWidth);
 
-    const [exercisesAreLoading, setExercisesAreLoading] = useState(true);
+    const [planName, setPlanName] = useState('');
     const [exercises, setExercises] = useState([]);
     const [selectedExercises, setSelectedExercises] = useState([]);
+
+    const [exercisesAreLoading, setExercisesAreLoading] = useState(true);
     const [planAdded, setPlanAdded] = useState(false);
     const [planNameIsSet, setPlanNameIsSet] = useState(false);
     const [planNameInputTouched, setPlanNameInputTouched] = useState(false);
     const [planNameInputIsInvalid, setPlanNameInputIsInvalid] = useState(false);
 
-    const [planName, setPlanName] = useState('');
-    const planNameIsValid = planName.trim() !== '';
-
     const inputPlanNameRef = useRef(null);
     const welcomeMessageOpacity = useRef(new Animated.Value(0)).current;
 
+    const planNameIsValid = planName.trim() !== '';
+
     useEffect(() => {
-        getExercises(setExercises, setExercisesAreLoading);
+        getExercises(setExercises);
     }, [])
 
     useEffect(() => {
       setPlanNameInputIsInvalid(!planNameIsValid && planNameInputTouched);
   }, [planNameIsValid, planNameInputTouched]);
-
-    if(exercisesAreLoading){
-        return(
-            <View style={styles.loadingScreen}>
-                <Text style={styles.loadingText}>Ładowanie listy ćwiczeń...</Text>
-            </View>
-        )
-    }
 
     return(
       <TouchableWithoutFeedback onPress={(e) => onScreenPressHandler(e, inputPlanNameRef)}>

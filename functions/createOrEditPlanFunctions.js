@@ -5,3 +5,8 @@ export const onPressAddNewPlan = (e, navigation) => {
 export const onPressReturnHandler = (e, navigation) => {
     navigation.goBack();
 }
+
+
+export const onPressEditPlan = (e, navigation) => {
+    navigation.navigate('EditTrainingPlan')
+}
