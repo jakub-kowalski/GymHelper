@@ -16,10 +16,27 @@ export const createTables = () => {
       );
   
       // Tabela Training
-      tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS Training (Training_ID INTEGER PRIMARY KEY AUTOINCREMENT, Training_Date TEXT, Plan_ID INTEGER, FOREIGN KEY(Plan_ID) REFERENCES Training_Plan(Plan_ID))'
+      // tx.executeSql(
+      //   'DROP TABLE IF EXISTS TrainingSession',
+      //   [],
+      //   () => {
+          tx.executeSql(
+            'CREATE TABLE IF NOT EXISTS TrainingSession (TrainingSessionID INTEGER PRIMARY KEY AUTOINCREMENT, TrainingPlanID INTEGER, ExcerciseID INTEGER, Series INTEGER, Reps INTEGER, Weight INTEGER, DateAdded TEXT, FOREIGN KEY (TrainingPlanID) REFERENCES Training_Plan(Plan_ID), FOREIGN KEY (ExcerciseID) REFERENCES All_Excercises(Excercise_ID))',
+            [],
+            () => {
+              console.log('Tabela TrainingSession została utworzona na nowo');
+            },
+            (_, error) => {
+              console.log('Wystąpił błąd podczas tworzenia tabeli TrainingSession:', error);
+            }
+          );
+        },
+        (_, error) => {
+          console.log('Wystąpił błąd podczas usuwania tabeli TrainingSession:', error);
+        }
       );
-    });
+      
+   // });
 };
 
 export const addExercise = (focusedBodyPart, exerciseName, description) => {
@@ -117,3 +134,53 @@ export const deleteTrainingPlan = (planId, setExerciseDeleted, welcomeMessageOpa
     );
   });
 };
+
+export const deleteExercise = (exerciseName) => {
+  db.transaction(tx => {
+    tx.executeSql(
+      'DELETE FROM All_Excercises WHERE Excercise_Name = ?',
+      [exerciseName],
+      (txObj, resultSet) => {
+        // Usunięcie rekordu zakończone sukcesem
+        console.log('Usunięto rekord z tabeli Excercises');
+      },
+      (txObj, error) => {
+        // Błąd podczas usuwania rekordu
+        console.log('Błąd podczas usuwania rekordu z tabeli Excercises:', error);
+      }
+    );
+  });
+};
+
+export const saveTrainingInformation = (planTable, selectedExercise, seriesVal, repsVal, weightVal, dateAdded) => {
+  return new Promise((resolve, reject) => {
+  db.transaction((tx) => {
+      tx.executeSql(
+        'INSERT INTO TrainingSession (TrainingPlanID, ExcerciseID, Series, Reps, Weight, DateAdded) VALUES (?, ?, ?, ?, ?, ?)',
+        [planTable[0], selectedExercise, seriesVal, repsVal, weightVal, dateAdded],
+        (_, result) => {
+          resolve(result.insertId)
+          console.log(result)
+        },
+        (_, error) => {
+          reject(error)
+          console.log('Wystąpił błąd podczas zapisywania informacji o treningu:', error);
+        }
+      );
+  });
+})};
+
+export const getTrainingSessions = (setTrainingSessions) => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      'SELECT * FROM TrainingSession', null,
+      (txObj, resultSet) => {
+        setTrainingSessions(resultSet.rows._array)
+      },
+      (txObj, error) => console.log(error)
+    );
+  });
+};
+
+
+

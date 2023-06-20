@@ -1,7 +1,7 @@
 import { View, Text, SafeAreaView, TouchableOpacity, Dimensions} from "react-native";
 import { useState, useRef, useEffect } from 'react';
 import { styles  } from "../styles/homeScreenStyles";
-import { getAllTrainings } from "../databaseFunctions";
+import { displayTrainingSessions, getAllTrainings } from "../databaseFunctions";
 import { onPressCreateOrEditPlan, onPressTrainingHistory, onPressAddNewExercise, onPressBeginTraining } from "../functions/homeScreenFunctions";
 
 export const HomeScreen = ({navigation, route}) => {

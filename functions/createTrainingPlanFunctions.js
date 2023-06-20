@@ -36,6 +36,7 @@ export const getSelectedExercises = (exercises) => {
     return selectedExercisesTmp;
   };
 
+  //inspirowane internetem
 export const handleCheckboxChange = (setExercises, exerciseId) => {
     setExercises(prevExercises => {
       const updatedExercises = prevExercises.map((exercise) => {
@@ -47,6 +48,7 @@ export const handleCheckboxChange = (setExercises, exerciseId) => {
         }
         return exercise;
       });
+      console.log(updatedExercises)
       return updatedExercises;
     });
   };
@@ -82,7 +84,7 @@ export const onPressAddPlanHandler = (e, exercises, setSelectedExercises, planNa
       navigation.goBack();
   }, 3000);
   };
-
+//część z CheckBox inspirowana
 export const renderExercises = (exercises, widthInPx, setExercises) => {
     return exercises.map((exercise) => {
         return(

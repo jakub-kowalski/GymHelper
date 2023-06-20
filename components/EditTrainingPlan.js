@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { View, Text, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, TextInput, TouchableWithoutFeedback, Animated } from "react-native";
 import { deleteTrainingPlan, getAllTrainings, getExercises } from "../databaseFunctions";
-import { renderTrainingPlans, onPressReturnHandler } from "../functions/editTrainingPlanFunctions";
+import { renderTrainingPlans, onPressReturnHandler, renderExercises } from "../functions/editTrainingPlanFunctions";
 import { styles } from "../styles/editTrainingPlanStyles";
 import Modal  from "react-native-modal";
 
@@ -16,6 +16,7 @@ export const EditTrainingPlan = ({navigation, route}) => {
     const [exercises, setExercises] = useState([])
     const [selectedPlan, setSelectedPlan] = useState(null)
     const [exerciseDeleted, setExerciseDeleted] = useState(false)
+    const [exerciseEdited, setExerciseEdited] = useState(false)
 
     useEffect( () => {
         getAllTrainings(setPlans)
@@ -32,7 +33,7 @@ export const EditTrainingPlan = ({navigation, route}) => {
     return(
 
             <SafeAreaView style={styles.container}>
-            {!exerciseDeleted &&
+            {!exerciseDeleted && !exerciseEdited &&
             <View>               
             <View style={styles.top}>
                     <Text style={[styles.logo, {width: widthInPx}]}>Gym Helper</Text>
@@ -57,7 +58,7 @@ export const EditTrainingPlan = ({navigation, route}) => {
                     <SafeAreaView style={[styles.modalBg, {width: widthInPx}]}>
                         <Text style={styles.modalTitle}>Co chcesz zrobić z tym planem?</Text>
                         <View style={styles.sideBtn}>
-                            <TouchableOpacity style={styles.buttonModal}>
+                            <TouchableOpacity style={styles.buttonModal} /*onPress={() => setExerciseEdited(true)}*/>
                                 <Text style={styles.buttonTextModal}>Edytuj plan</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.buttonModal} onPress={() => deleteTrainingPlan(selectedPlan, setExerciseDeleted, welcomeMessageOpacity, navigation)}>
@@ -76,6 +77,12 @@ export const EditTrainingPlan = ({navigation, route}) => {
                         style={[styles.exerciseAddedText, {opacity: welcomeMessageOpacity}]}>
                         Pomyślnie usunięto ćwiczenie!
                     </Animated.Text>
+                </SafeAreaView>}
+                {exerciseEdited &&
+                <SafeAreaView>
+                    <ScrollView>
+                        {renderExercises(exercises, widthInPx, selectedPlan, setExercises, plans)}
+                    </ScrollView>
                 </SafeAreaView>}
             </SafeAreaView>
     );

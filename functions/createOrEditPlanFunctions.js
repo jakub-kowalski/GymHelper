@@ -1,3 +1,5 @@
+import { deleteExercise } from "../databaseFunctions";
+
 export const onPressAddNewPlan = (e, navigation) => {
     navigation.navigate('CreateTrainingPlan')
 }

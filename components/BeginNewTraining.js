@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { View, Text, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, TextInput, TouchableWithoutFeedback, Animated } from "react-native";
 import { getAllTrainings, getExercises } from "../databaseFunctions";
-import { renderTrainingPlans, onPressReturnHandler } from "../functions/editTrainingPlanFunctions";
+import { renderTrainingPlans, onPressReturnHandler } from "../functions/beginNewTrainingFunctions";
 import { styles } from "../styles/editTrainingPlanStyles";
 
 export const BeginNewTraining = ({navigation, route}) => {
@@ -11,6 +11,7 @@ export const BeginNewTraining = ({navigation, route}) => {
 
     const [plans, setPlans] = useState([])
     const [exercises, setExercises] = useState([])
+    const  [selectedPlan, setSelectedPlan] = useState(null)
 
     useEffect( () => {
         getAllTrainings(setPlans)
@@ -27,7 +28,7 @@ export const BeginNewTraining = ({navigation, route}) => {
                 <Text style={[styles.header, {width: widthInPx}]}>Rozpocznij trening!</Text>
             </View>
             <ScrollView style={styles.mainContent}>
-                {renderTrainingPlans(plans, exercises, widthInPx)}
+                {renderTrainingPlans(plans, exercises, widthInPx, setSelectedPlan, navigation)}
             </ScrollView>
             <TouchableOpacity 
                 style={[styles.button, {width: widthInPx, backgroundColor: '#5E6061'}]} 

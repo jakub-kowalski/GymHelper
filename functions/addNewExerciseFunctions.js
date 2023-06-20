@@ -42,7 +42,7 @@ export const onPressAddExerciseHandler = (setExerciseNameInputTouched, setExerci
     }
     addExercise(exerciseBodyPart, exerciseName, exerciseDescription);
     setExerciseAdded(true);
-    Animated.timing(welcomeMessageOpacity, {
+    Animated.timing(welcomeMessageOpacity, {    // animacja wzięta z internetu
         toValue: 1,
         duration: 1500,
         useNativeDriver: true,
